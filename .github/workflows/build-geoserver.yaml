@@ -22,7 +22,7 @@ jobs:
       - name: LS back
         run: cd ./../ && ls -al
       - name: Load ENV file
-        run: grep -v '^#' .env >> $GITHUB_ENV
+        run: grep -v '^#'  $GITHUB_WORKSPACE/docker-geoserver/.env >> $GITHUB_ENV
       - name: output-tag
         run: |
           echo "IMAGE_TAG=${{ env.GS_VERSION }}-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
