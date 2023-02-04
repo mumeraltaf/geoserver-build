@@ -46,8 +46,7 @@ jobs:
         run: pwd
       - name: Copy Overlay Resources
         run: | 
-          mkdir ./custom_resources
-          cp -r ./../geoserver-build/custom_resources ./../docker-geoserver
+          cp -r ./custom_resources ./../docker-geoserver/
           mkdir -p ./../docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar ./../docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
       - name: Update Dockerfile to copy in custom resources
         run: |
