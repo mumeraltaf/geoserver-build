@@ -43,7 +43,7 @@ jobs:
           echo $GITHUB_WORKSPACE
           tree -L 2 $GITHUB_WORKSPACE
       - name: Build web-service-auth
-        working-directory: $GITHUB_WORKSPACE/geoserver/src/community/web-service-auth
+        working-directory: ./geoserver/src/community/web-service-auth
         run: |
           mvn clean package -DskipTests=true
       - name: PWD
@@ -53,7 +53,7 @@ jobs:
           pwd
           ls
           cp -r ./../custom_resources $GITHUB_WORKSPACE/docker-geoserver/
-          mkdir -p $GITHUB_WORKSPACE/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp $GITHUB_WORKSPACE/geoserver/src/community/web-service-auth/target/*.jar $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
+          mkdir -p $GITHUB_WORKSPACE/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
       - name: Update Dockerfile to copy in custom resources
         run: |
           pwd
