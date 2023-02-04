@@ -38,7 +38,9 @@ jobs:
           cache: 'maven'
       - name: Build web-service-auth
         working-directory: /geoserver/src/community/web-service-auth
-        run: mvn clean package -DskipTests=true
+        run: |
+          pwd
+          mvn clean package -DskipTests=true
       - name: PWD
         run: pwd
       - name: Copy Overlay Resources
