@@ -82,12 +82,6 @@ jobs:
       - name: Build Docker Image
         run: |
           cd $GITHUB_WORKSPACE/docker-geoserver
-          sudo docker build -t umeraltaf/geoserver:${{ env.IMAGE_TAG }} \
-          --build-arg IMAGE_VERSION=${{ env.IMAGE_VERSION }} \
-          --build-arg JAVA_HOME=${{ env.JAVA_HOME }} \
-          --build-arg GS_VERSION=${{ env.GS_VERSION }} \
-          --build-arg WAR_URL=${{ env.WAR_URL }} \
-          --build-arg DOWNLOAD_ALL_STABLE_EXTENSIONS=${{ env.DOWNLOAD_ALL_COMMUNITY_EXTENSIONS }} \
-          --build-arg STABLE_PLUGIN_BASE_URL=${{ env.STABLE_PLUGIN_BASE_URL }} .
+          sudo docker build -t umeraltaf/geoserver:${{ env.IMAGE_TAG }} .
       - name: Push to Repo
         run: docker image push umeraltaf/geoserver:"${{ env.IMAGE_TAG }}"
