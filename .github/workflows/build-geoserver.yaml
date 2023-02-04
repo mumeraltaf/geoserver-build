@@ -43,7 +43,7 @@ jobs:
       - name: Copy Overlay Resources
         run: | 
           mkdir ./custom_resources
-          cp -r ./../geoserver-build/custom_resources ./custom_resources
+          cp -r ./../geoserver-build/custom_resources ./
           mkdir -p ./resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar ./resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
       - name: Update Dockerfile to copy in custom resources
         run: |
