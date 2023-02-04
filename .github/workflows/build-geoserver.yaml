@@ -29,6 +29,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          distribution: 'temurin'
+          cache: 'maven'
       - name: Checkout GeoServer
         uses: actions/checkout@v3
         with:
@@ -50,6 +52,7 @@ jobs:
           echo "ADD custom_resources /custom_resources" >> ./../docker-geoserver/Dockerfile
       - name: Update start.sh script for custom resources
         run: |
+          pwd
           echo "chmod +x /custom_resources/copy_custom_resources.sh" >> ./../docker-geoserver/scripts/start.sh
           echo "/custom_resources/copy_custom_resources.sh" >> ./../docker-geoserver/scripts/start.sh
       - name: Disable community and stable plugin installations
