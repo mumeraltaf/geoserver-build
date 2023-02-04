@@ -43,19 +43,19 @@ jobs:
       - name: Copy Overlay Resources
         run: | 
           mkdir ./custom_resources
-          cp -r ./../geoserver-build/custom_resources ./
-          mkdir -p ./resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar ./resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
+          cp -r ./../geoserver-build/custom_resources ./../docker-geoserver
+          mkdir -p ./../docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar ./../docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
       - name: Update Dockerfile to copy in custom resources
         run: |
-          echo "ADD custom_resources /custom_resources" >> ./docker-geoserver/Dockerfile
+          echo "ADD custom_resources /custom_resources" >> ./../docker-geoserver/Dockerfile
       - name: Update start.sh script for custom resources
         run: |
-          echo "chmod +x /custom_resources/copy_custom_resources.sh" >> ./scripts/start.sh
-          echo "/custom_resources/copy_custom_resources.sh" >> ./scripts/start.sh
+          echo "chmod +x /custom_resources/copy_custom_resources.sh" >> ./../docker-geoserver/scripts/start.sh
+          echo "/custom_resources/copy_custom_resources.sh" >> ./../docker-geoserver/scripts/start.sh
       - name: Disable community and stable plugin installations
         run: |
-          cat /dev/null > ./build_data/stable_plugins.txt
-          cat /dev/null > ./build_data/community_plugins.txt
+          cat /dev/null > ./../docker-geoserver/build_data/stable_plugins.txt
+          cat /dev/null > ./../docker-geoserver/build_data/community_plugins.txt
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -66,7 +66,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PAT }}
       - name: Build Docker Image
-        working-directory: ./docker-geoserver
+        working-directory: ./../docker-geoserver/build_data
         run: |
           sudo docker build -t umeraltaf/geoserver:${{ env.IMAGE_TAG }} \
           --build-arg IMAGE_VERSION=${{ env.IMAGE_VERSION }} \
