@@ -40,7 +40,8 @@ jobs:
       - name: Build web-service-auth
         working-directory: ./src/community/web-service-auth
         run: |
-          tree -L 4 /home
+          echo $GITHUB_WORKSPACE
+          tree -L 4 $GITHUB_WORKSPACE
           mvn clean package -DskipTests=true
       - name: PWD
         run: pwd
