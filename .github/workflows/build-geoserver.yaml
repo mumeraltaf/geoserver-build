@@ -40,7 +40,7 @@ jobs:
       - name: Check Tree
         run: |
           echo $GITHUB_WORKSPACE
-          tree -L 2 $GITHUB_WORKSPACE
+          tree -L 2 /home/runner/work
       - name: Build web-service-auth
         working-directory: ./src/community/web-service-auth
         run: |
