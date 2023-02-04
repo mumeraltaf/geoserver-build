@@ -14,6 +14,7 @@ jobs:
         with:
           repository: kartoza/docker-geoserver
           ref: v2.21.2
+          path: docker-geoserver
       - name: Setup Runner
         run: lscpu
       - name: LS
@@ -28,6 +29,7 @@ jobs:
           echo "IMAGE_TAG=${{ env.GS_VERSION }}-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Checkout GeoServer
         uses: actions/checkout@v3
+        path: geoserver
         with:
           repository: geoserver/geoserver
           ref: ${{ env.GS_VERSION }}
@@ -36,13 +38,12 @@ jobs:
         with:
           java-version: 11
           distribution: 'temurin'
-          cache: 'maven'
       - name: Check Tree
         run: |
           echo $GITHUB_WORKSPACE
-          tree -L 2 /home/runner/work
+          tree -L 2 $GITHUB_WORKSPACE
       - name: Build web-service-auth
-        working-directory: ./src/community/web-service-auth
+        working-directory: $GITHUB_WORKSPACE/geoserver/src/community/web-service-auth
         run: |
           mvn clean package -DskipTests=true
       - name: PWD
@@ -51,24 +52,24 @@ jobs:
         run: |
           pwd
           ls
-          cp -r ./../custom_resources ./../docker-geoserver/
-          mkdir -p ./../docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar ./../docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
+          cp -r ./../custom_resources $GITHUB_WORKSPACE/docker-geoserver/
+          mkdir -p $GITHUB_WORKSPACE/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp $GITHUB_WORKSPACE/geoserver/src/community/web-service-auth/target/*.jar $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
       - name: Update Dockerfile to copy in custom resources
         run: |
           pwd
-          echo "ADD custom_resources /custom_resources" >> ./../docker-geoserver/Dockerfile
+          echo "ADD custom_resources /custom_resources" >> $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
       - name: Update start.sh script for custom resources
         run: |
           pwd
           ls
-          echo "chmod +x /custom_resources/copy_custom_resources.sh" >> ./../docker-geoserver/scripts/start.sh
-          echo "/custom_resources/copy_custom_resources.sh" >> ./../docker-geoserver/scripts/start.sh
+          echo "chmod +x /custom_resources/copy_custom_resources.sh" >> $GITHUB_WORKSPACE/docker-geoserver/scripts/start.sh
+          echo "/custom_resources/copy_custom_resources.sh" >> $GITHUB_WORKSPACE/docker-geoserver/scripts/start.sh
       - name: Disable community and stable plugin installations
         run: |
           pwd
           ls
-          cat /dev/null > ./../docker-geoserver/build_data/stable_plugins.txt
-          cat /dev/null > ./../docker-geoserver/build_data/community_plugins.txt
+          cat /dev/null > $GITHUB_WORKSPACE/docker-geoserver/build_data/stable_plugins.txt
+          cat /dev/null > $GITHUB_WORKSPACE/docker-geoserver/build_data/community_plugins.txt
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -79,7 +80,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PAT }}
       - name: Build Docker Image
-        working-directory: ./../docker-geoserver/build_data
+        working-directory: $GITHUB_WORKSPACE/docker-geoserver
         run: |
           pwd
           ls
