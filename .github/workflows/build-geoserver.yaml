@@ -53,7 +53,7 @@ jobs:
           pwd
           ls
           cp -r $GITHUB_WORKSPACE/custom_resources $GITHUB_WORKSPACE/docker-geoserver/
-          mkdir -p $GITHUB_WORKSPACE/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
+          mkdir -p $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
       - name: Update Dockerfile to copy in custom resources
         run: |
           pwd
