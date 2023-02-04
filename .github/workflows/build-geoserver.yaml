@@ -80,10 +80,8 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PAT }}
       - name: Build Docker Image
-        working-directory: $GITHUB_WORKSPACE/docker-geoserver
         run: |
-          pwd
-          ls
+          cd $GITHUB_WORKSPACE/docker-geoserver
           sudo docker build -t umeraltaf/geoserver:${{ env.IMAGE_TAG }} \
           --build-arg IMAGE_VERSION=${{ env.IMAGE_VERSION }} \
           --build-arg JAVA_HOME=${{ env.JAVA_HOME }} \
