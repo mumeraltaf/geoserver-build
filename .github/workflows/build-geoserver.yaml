@@ -40,7 +40,7 @@ jobs:
       - name: Build web-service-auth
         working-directory: ./src/community/web-service-auth
         run: |
-          tree -L 3 /home/runner/work
+          tree -L 4 /home
           mvn clean package -DskipTests=true
       - name: PWD
         run: pwd
