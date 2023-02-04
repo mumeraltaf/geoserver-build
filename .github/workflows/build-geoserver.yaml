@@ -9,6 +9,7 @@ jobs:
     environment: build
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           repository: kartoza/docker-geoserver
           ref: v2.21.2
