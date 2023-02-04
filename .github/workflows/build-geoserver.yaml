@@ -37,7 +37,7 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: Build web-service-auth
-        working-directory: ./geoserver/src/community/web-service-auth
+        working-directory: ./../geoserver/src/community/web-service-auth
         run: mvn clean package -DskipTests=true
       - name: PWD
         run: pwd
