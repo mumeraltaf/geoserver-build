@@ -27,43 +27,43 @@ jobs:
         run: |
           echo "IMAGE_TAG=${{ env.GS_VERSION }}-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "IMAGE_TAG=${{ env.GS_VERSION }}-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-      - name: Checkout GeoServer
-        uses: actions/checkout@v3
-        with:
-          repository: geoserver/geoserver
-          ref: ${{ env.GS_VERSION }}
-          path: geoserver
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: 11
-          distribution: 'temurin'
-      - name: Check Tree
-        run: |
-          echo $GITHUB_WORKSPACE
-          tree -L 2 $GITHUB_WORKSPACE
-      - name: Build web-service-auth
-        working-directory: ./geoserver/src/community/web-service-auth
-        run: |
-          mvn clean package -DskipTests=true
-      - name: PWD
-        run: pwd
-      - name: Copy Overlay Resources
-        run: |
-          pwd
-          ls
-          cp -r $GITHUB_WORKSPACE/custom_resources $GITHUB_WORKSPACE/docker-geoserver/
-          mkdir -p $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
-      - name: Update Dockerfile to copy in custom resources
-        run: |
-          pwd
-          echo "ADD custom_resources /custom_resources" >> $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
-      - name: Update start.sh script for custom resources
-        run: |
-          pwd
-          ls
-          echo "chmod +x /custom_resources/copy_custom_resources.sh" >> $GITHUB_WORKSPACE/docker-geoserver/scripts/start.sh
-          echo "/custom_resources/copy_custom_resources.sh" >> $GITHUB_WORKSPACE/docker-geoserver/scripts/start.sh
+#      - name: Checkout GeoServer
+#        uses: actions/checkout@v3
+#        with:
+#          repository: geoserver/geoserver
+#          ref: ${{ env.GS_VERSION }}
+#          path: geoserver
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: 11
+#          distribution: 'temurin'
+#      - name: Check Tree
+#        run: |
+#          echo $GITHUB_WORKSPACE
+#          tree -L 2 $GITHUB_WORKSPACE
+#      - name: Build web-service-auth
+#        working-directory: ./geoserver/src/community/web-service-auth
+#        run: |
+#          mvn clean package -DskipTests=true
+#      - name: PWD
+#        run: pwd
+#      - name: Copy Overlay Resources
+#        run: |
+#          pwd
+#          ls
+#          cp -r $GITHUB_WORKSPACE/custom_resources $GITHUB_WORKSPACE/docker-geoserver/
+#          mkdir -p $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib && cp ./geoserver/src/community/web-service-auth/target/*.jar $GITHUB_WORKSPACE/docker-geoserver/resources/overlays/usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
+#      - name: Update Dockerfile to copy in custom resources
+#        run: |
+#          pwd
+#          echo "ADD custom_resources /custom_resources" >> $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
+#      - name: Update start.sh script for custom resources
+#        run: |
+#          pwd
+#          ls
+#          echo "chmod +x /custom_resources/copy_custom_resources.sh" >> $GITHUB_WORKSPACE/docker-geoserver/scripts/start.sh
+#          echo "/custom_resources/copy_custom_resources.sh" >> $GITHUB_WORKSPACE/docker-geoserver/scripts/start.sh
       - name: Disable community and stable plugin installations
         run: |
           pwd
