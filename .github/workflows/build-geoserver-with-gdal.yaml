@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  push:
+    runs-on: ubuntu-20.04
+    environment: build
+    steps:
+
+      - uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PAT }}
+      - name: Build GDAL 3.2 + tomcat Docker Base Image
+        run: |
+          sudo docker build -t tomcat/9.0.71-jre11-temurin-focal-gdal-3 .
+      - uses: actions/checkout@v3
+        with:
+          repository: kartoza/docker-geoserver
+          ref: v2.22.0
+          path: docker-geoserver
+      - name: Load ENV file
+        run: grep -v '^#'  $GITHUB_WORKSPACE/docker-geoserver/.env >> $GITHUB_ENV
+      - name: output-tag
+        run: |
+          echo "IMAGE_TAG=${{ env.GS_VERSION }}-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "IMAGE_TAG=${{ env.GS_VERSION }}-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Monkey patch Dockerfile to not install gdal from apt
+        run: |
+          sed -i.bak  's/gdal-bin//g' $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
+          sed -i.bak  '/libgdal-java/d' $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
+      - name: Build Docker Image
+        run: |
+          cd $GITHUB_WORKSPACE/docker-geoserver
+          sudo docker build -t umeraltaf/geoserver:${{ env.IMAGE_TAG }} --build-arg IMAGE_VERSION=9.0.71-jre11-temurin-focal-gdal-3 .
+      - name: Push to Repo
+        run: docker image push umeraltaf/geoserver:"${{ env.IMAGE_TAG }}"
