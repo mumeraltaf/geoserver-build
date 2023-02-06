@@ -21,6 +21,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PAT }}
       - name: Build GDAL 3.2 + tomcat Docker Base Image
         run: |
+          cd ./tomcat-gdal-base
           sudo docker build -t tomcat/9.0.71-jre11-temurin-focal-gdal-3 .
       - uses: actions/checkout@v3
         with:
