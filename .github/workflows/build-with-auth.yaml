@@ -59,7 +59,7 @@ jobs:
           echo "ADD custom_resources /custom_resources" >> $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
       - name: Disable GDAL GeoServer Plugin
         run: |
-          cp -r $GITHUB_WORKSPACE/custom_resources/v2.22.0/setup.sh $GITHUB_WORKSPACE/docker-geoserver/setup.sh
+          cp -r $GITHUB_WORKSPACE/custom_resources/v2.22.0/setup.sh $GITHUB_WORKSPACE/docker-geoserver/scripts/setup.sh
       - name: Update start.sh script for custom resources
         run: |
           pwd
