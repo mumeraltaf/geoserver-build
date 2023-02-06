@@ -6,7 +6,7 @@ source /scripts/functions.sh
 
 resources_dir="/tmp/resources"
 GS_VERSION=$(cat /scripts/geoserver_version.txt)
-#create_dir ${resources_dir}/plugins/gdal
+create_dir ${resources_dir}/plugins
 create_dir /usr/share/fonts/opentype
 create_dir /tomcat_apps
 create_dir "${CATALINA_HOME}"/postgres_config
