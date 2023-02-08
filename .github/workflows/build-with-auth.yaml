@@ -66,12 +66,12 @@ jobs:
           ls
           echo "chmod +x /custom_resources/copy_custom_resources.sh" >> $GITHUB_WORKSPACE/docker-geoserver/scripts/start.sh
           echo "/custom_resources/copy_custom_resources.sh" >> $GITHUB_WORKSPACE/docker-geoserver/scripts/start.sh
-      - name: Disable community and stable plugin installations
-        run: |
-          pwd
-          ls
-          cat /dev/null > $GITHUB_WORKSPACE/docker-geoserver/build_data/stable_plugins.txt
-          cat /dev/null > $GITHUB_WORKSPACE/docker-geoserver/build_data/community_plugins.txt
+#      - name: Disable community and stable plugin installations
+#        run: |
+#          pwd
+#          ls
+#          cat /dev/null > $GITHUB_WORKSPACE/docker-geoserver/build_data/stable_plugins.txt
+#          cat /dev/null > $GITHUB_WORKSPACE/docker-geoserver/build_data/community_plugins.txt
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
