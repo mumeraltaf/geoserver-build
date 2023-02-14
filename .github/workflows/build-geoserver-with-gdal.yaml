@@ -22,9 +22,9 @@ jobs:
       - name: Build GDAL 3.2 + tomcat Docker Base Image
         run: |
           cd ./tomcat-gdal-base
-          sudo docker build -t umeraltaf/gdal-base:1 .
+          sudo docker build -t umeraltaf/gdal-base:2 .
       - name: Push to Repo
-        run: docker image push umeraltaf/gdal-base:1
+        run: docker image push umeraltaf/gdal-base:2
       - uses: actions/checkout@v3
         with:
           repository: kartoza/docker-geoserver
@@ -38,7 +38,7 @@ jobs:
           echo "IMAGE_TAG=${{ env.GS_VERSION }}-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Monkey patch Dockerfile to not install gdal from apt
         run: |
-          sed -i.bak   's/tomcat:$IMAGE_VERSION/umeraltaf\/gdal-base:1/g' $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
+          sed -i.bak   's/tomcat:$IMAGE_VERSION/umeraltaf\/gdal-base:2/g' $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
           sed -i.bak  's/gdal-bin//g' $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
           sed -i.bak  '/libgdal-java/d' $GITHUB_WORKSPACE/docker-geoserver/Dockerfile
       - name: Build Docker Image

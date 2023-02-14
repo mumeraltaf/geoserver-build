@@ -17,7 +17,7 @@ WORKDIR /tmp
 
 ENV CPUS 2
 
-ENV WEBP_VERSION 1.0.0
+ENV WEBP_VERSION 1.3.0
 RUN wget -q https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${WEBP_VERSION}.tar.gz && \
     tar xzf libwebp-${WEBP_VERSION}.tar.gz && \
     cd libwebp-${WEBP_VERSION} && \
@@ -25,7 +25,7 @@ RUN wget -q https://storage.googleapis.com/downloads.webmproject.org/releases/we
     echo "building WEBP ${WEBP_VERSION}..." \
     make --quiet -j${CPUS} && make --quiet install
 
-ENV ZSTD_VERSION 1.3.4
+ENV ZSTD_VERSION 1.5.4
 RUN wget -q -O zstd-${ZSTD_VERSION}.tar.gz https://github.com/facebook/zstd/archive/v${ZSTD_VERSION}.tar.gz \
     && tar -zxf zstd-${ZSTD_VERSION}.tar.gz \
     && cd zstd-${ZSTD_VERSION} \
@@ -33,7 +33,7 @@ RUN wget -q -O zstd-${ZSTD_VERSION}.tar.gz https://github.com/facebook/zstd/arch
     && make --quiet -j${CPUS} ZSTD_LEGACY_SUPPORT=0 CFLAGS=-O1 \
     && make --quiet install ZSTD_LEGACY_SUPPORT=0 CFLAGS=-O1
 
-ENV LIBDEFLATE_VERSION 1.7
+ENV LIBDEFLATE_VERSION 1.17
 RUN wget -q https://github.com/ebiggers/libdeflate/archive/v${LIBDEFLATE_VERSION}.tar.gz \
     && tar -zxf v${LIBDEFLATE_VERSION}.tar.gz \
     && cd libdeflate-${LIBDEFLATE_VERSION} \
@@ -41,7 +41,7 @@ RUN wget -q https://github.com/ebiggers/libdeflate/archive/v${LIBDEFLATE_VERSION
     && make -j${CPUS} \
     && make --quiet install
 
-ENV LIBJPEG_TURBO_VERSION 2.0.5
+ENV LIBJPEG_TURBO_VERSION 2.1.5.1
 RUN wget -q https://github.com/libjpeg-turbo/libjpeg-turbo/archive/${LIBJPEG_TURBO_VERSION}.tar.gz \
     && tar -zxf ${LIBJPEG_TURBO_VERSION}.tar.gz \
     && cd libjpeg-turbo-${LIBJPEG_TURBO_VERSION} \
@@ -50,7 +50,7 @@ RUN wget -q https://github.com/libjpeg-turbo/libjpeg-turbo/archive/${LIBJPEG_TUR
     && make -j${CPUS} \
     && make --quiet install
 
-ENV GEOS_VERSION 3.9.1
+ENV GEOS_VERSION 3.9.4
 RUN wget -q https://download.osgeo.org/geos/geos-${GEOS_VERSION}.tar.bz2 \
     && tar -xjf geos-${GEOS_VERSION}.tar.bz2  \
     && cd geos-${GEOS_VERSION} \
@@ -66,7 +66,7 @@ RUN wget -q https://sqlite.org/${SQLITE_YEAR}/sqlite-autoconf-${SQLITE_VERSION}.
     && echo "building SQLITE ${SQLITE_VERSION}..." \
     && make --quiet -j${CPUS} && make --quiet install
 
-ENV LIBTIFF_VERSION=4.2.0
+ENV LIBTIFF_VERSION=4.5.0
 RUN wget -q https://download.osgeo.org/libtiff/tiff-${LIBTIFF_VERSION}.tar.gz \
     && tar -xzf tiff-${LIBTIFF_VERSION}.tar.gz \
     && cd tiff-${LIBTIFF_VERSION} \
@@ -74,7 +74,7 @@ RUN wget -q https://download.osgeo.org/libtiff/tiff-${LIBTIFF_VERSION}.tar.gz \
     && echo "building libtiff ${LIBTIFF_VERSION}..." \
     && make --quiet -j${CPUS} && make --quiet install
 
-ENV NGHTTP2_VERSION 1.42.0
+ENV NGHTTP2_VERSION 1.52.0
 RUN wget https://github.com/nghttp2/nghttp2/releases/download/v${NGHTTP2_VERSION}/nghttp2-${NGHTTP2_VERSION}.tar.gz \
     && tar -xzf nghttp2-${NGHTTP2_VERSION}.tar.gz \
     && cd nghttp2-${NGHTTP2_VERSION} \
@@ -82,14 +82,14 @@ RUN wget https://github.com/nghttp2/nghttp2/releases/download/v${NGHTTP2_VERSION
     && ./configure --enable-lib-only --prefix=/usr/local \
     && make --quiet -j${CPUS} && make --quiet install
 
-ENV CURL_VERSION 7.73.0
+ENV CURL_VERSION 7.87.0
 RUN wget -q https://curl.haxx.se/download/curl-${CURL_VERSION}.tar.gz \
     && tar -xzf curl-${CURL_VERSION}.tar.gz && cd curl-${CURL_VERSION} \
     && ./configure --prefix=/usr/local \
     && echo "building CURL ${CURL_VERSION}..." \
     && make --quiet -j${CPUS} && make --quiet install
 
-ENV PROJ_VERSION 7.2.1
+ENV PROJ_VERSION 9.1.0
 RUN wget -q https://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz \
     && tar -xzf proj-${PROJ_VERSION}.tar.gz \
     && cd proj-${PROJ_VERSION} \
@@ -97,7 +97,7 @@ RUN wget -q https://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz \
     && echo "building proj ${PROJ_VERSION}..." \
     && make --quiet -j${CPUS} && make --quiet install
 
-ENV LIBGEOTIFF_VERSION=1.6.0
+ENV LIBGEOTIFF_VERSION=1.7.1
 RUN wget -q https://github.com/OSGeo/libgeotiff/releases/download/${LIBGEOTIFF_VERSION}/libgeotiff-${LIBGEOTIFF_VERSION}.tar.gz \
     && tar -xzf libgeotiff-${LIBGEOTIFF_VERSION}.tar.gz \
     && cd libgeotiff-${LIBGEOTIFF_VERSION} \
@@ -113,7 +113,7 @@ RUN wget -q https://github.com/OSGeo/libgeotiff/releases/download/${LIBGEOTIFF_V
 #     && echo "building SPATIALITE ${SPATIALITE_VERSION}..." \
 #     && make --quiet -j${CPUS} && make --quiet install
 
-ENV OPENJPEG_VERSION 2.3.1
+ENV OPENJPEG_VERSION 2.5.0
 RUN wget -q -O openjpeg-${OPENJPEG_VERSION}.tar.gz https://github.com/uclouvain/openjpeg/archive/v${OPENJPEG_VERSION}.tar.gz \
     && tar -zxf openjpeg-${OPENJPEG_VERSION}.tar.gz \
     && cd openjpeg-${OPENJPEG_VERSION} \
@@ -122,8 +122,8 @@ RUN wget -q -O openjpeg-${OPENJPEG_VERSION}.tar.gz https://github.com/uclouvain/
     && echo "building openjpeg ${OPENJPEG_VERSION}..." \
     && make --quiet -j${CPUS} && make --quiet install
 
-ENV GDAL_SHORT_VERSION 3.2.1
-ENV GDAL_VERSION 3.2.1
+ENV GDAL_SHORT_VERSION 3.6.2
+ENV GDAL_VERSION 3.6.2
 RUN wget -q https://download.osgeo.org/gdal/${GDAL_SHORT_VERSION}/gdal-${GDAL_VERSION}.tar.gz
 RUN tar -xzf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_SHORT_VERSION} && \
     ./configure \
