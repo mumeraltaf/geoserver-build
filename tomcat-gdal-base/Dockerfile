@@ -33,7 +33,7 @@ RUN wget -q -O zstd-${ZSTD_VERSION}.tar.gz https://github.com/facebook/zstd/arch
     && make --quiet -j${CPUS} ZSTD_LEGACY_SUPPORT=0 CFLAGS=-O1 \
     && make --quiet install ZSTD_LEGACY_SUPPORT=0 CFLAGS=-O1
 
-ENV LIBDEFLATE_VERSION 1.17
+ENV LIBDEFLATE_VERSION 1.10
 RUN wget -q https://github.com/ebiggers/libdeflate/archive/v${LIBDEFLATE_VERSION}.tar.gz \
     && tar -zxf v${LIBDEFLATE_VERSION}.tar.gz \
     && cd libdeflate-${LIBDEFLATE_VERSION} \
