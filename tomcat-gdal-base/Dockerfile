@@ -25,7 +25,7 @@ RUN wget -q https://storage.googleapis.com/downloads.webmproject.org/releases/we
     echo "building WEBP ${WEBP_VERSION}..." \
     make --quiet -j${CPUS} && make --quiet install
 
-ENV ZSTD_VERSION 1.4.9
+ENV ZSTD_VERSION 1.3.8
 RUN wget -q -O zstd-${ZSTD_VERSION}.tar.gz https://github.com/facebook/zstd/archive/v${ZSTD_VERSION}.tar.gz \
     && tar -zxf zstd-${ZSTD_VERSION}.tar.gz \
     && cd zstd-${ZSTD_VERSION} \
