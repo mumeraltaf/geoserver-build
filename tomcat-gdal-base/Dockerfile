@@ -82,7 +82,7 @@ RUN wget https://github.com/nghttp2/nghttp2/releases/download/v${NGHTTP2_VERSION
     && ./configure --enable-lib-only --prefix=/usr/local \
     && make --quiet -j${CPUS} && make --quiet install
 
-ENV CURL_VERSION 7.87.0
+ENV CURL_VERSION 7.73.0
 RUN wget -q https://curl.haxx.se/download/curl-${CURL_VERSION}.tar.gz \
     && tar -xzf curl-${CURL_VERSION}.tar.gz && cd curl-${CURL_VERSION} \
     && ./configure --prefix=/usr/local \
